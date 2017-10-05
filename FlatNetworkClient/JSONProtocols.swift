@@ -14,6 +14,7 @@ protocol JsonCreatable {
     static func createFromJSON(_ json: A?) -> T?
 }
 
+//TODO: perhaps look at adding a swift 4 implementation and see if it works with solutions that are swift 3 and down comaptible
 extension JsonCreatable {
     static func createFromData(_ data: Data?) -> T? {
         if let data = data,

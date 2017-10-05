@@ -8,8 +8,6 @@
 
 import Foundation
 
-
-
 class NetworkClient: NSObject, NetworkConnectable {
     
     var tasks = [String: URLSessionTask]()
