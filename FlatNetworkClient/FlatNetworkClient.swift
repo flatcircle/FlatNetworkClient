@@ -42,7 +42,7 @@ class NetworkClient: NSObject, NetworkConnectable {
     private func execute<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
         if let request = createRequest(endPoint) {
             startTask(request: request as URLRequest) { data, error in
-                completion(A.createFromData(data).flatMap { $0 as? A }, error)
+                completion(type?.createFromData(data).flatMap { $0 as? A }, error)
             }
         }
     }
