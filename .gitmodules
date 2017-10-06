@@ -1,0 +1,3 @@
+[submodule "Carthage/Checkouts/FlatNetworkClient"]
+	path = Carthage/Checkouts/FlatNetworkClient
+	url = https://github.com/flatcircle/FlatNetworkClient.git
