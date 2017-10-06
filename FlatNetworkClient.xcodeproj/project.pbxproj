@@ -36,6 +36,7 @@
 		C03683C81F876FC500993947 /* FlatNetworkClient.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FlatNetworkClient.podspec; sourceTree = SOURCE_ROOT; };
 		C03683CA1F87715600993947 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
 		C03683CB1F87728E00993947 /* version.swift-version */ = {isa = PBXFileReference; lastKnownFileType = text; path = "version.swift-version"; sourceTree = "<group>"; };
+		C03683CD1F87771800993947 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = SOURCE_ROOT; };
 		C08735921F866052002F9700 /* FlatNetworkClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlatNetworkClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C08735951F866052002F9700 /* FlatNetworkClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlatNetworkClient.h; sourceTree = "<group>"; };
 		C08735961F866052002F9700 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -92,6 +93,7 @@
 		C08735941F866052002F9700 /* FlatNetworkClient */ = {
 			isa = PBXGroup;
 			children = (
+				C03683CD1F87771800993947 /* .gitignore */,
 				C03683CA1F87715600993947 /* LICENSE */,
 				C03683C81F876FC500993947 /* FlatNetworkClient.podspec */,
 				C08735951F866052002F9700 /* FlatNetworkClient.h */,
