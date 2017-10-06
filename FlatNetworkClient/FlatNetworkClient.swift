@@ -81,7 +81,7 @@ open class NetworkClient: NSObject, NetworkConnectable {
         return self.tasks[key]
     }
     
-    func cancelCurrentTasks() {
+    open func cancelCurrentTasks() {
         tasks.forEach { [weak self] key, _ in
             self?.getTask(for: key)?.cancel()
         }
