@@ -31,6 +31,14 @@ open class NetworkClient: NSObject, NetworkConnectable {
         execute(endPoint, type: type, completion: completion)
     }
     
+    open func post(_ endPoint: PostEndpointCreator, completion: @escaping (Data?, Error?) -> Void) {
+        if let request = createRequest(endPoint) {
+            startTask(request: request as URLRequest) { data, error in
+                completion(data, error)
+            }
+        }
+    }
+    
     open func delete<A>(_ endPoint: DeleteEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
         execute(endPoint, type: type, completion: completion)
     }
