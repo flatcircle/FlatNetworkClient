@@ -8,11 +8,11 @@
 
 import Foundation
 
-public class NetworkClient: NSObject, NetworkConnectable {
+open class NetworkClient: NSObject, NetworkConnectable {
     
-    public var tasks = [String: URLSessionTask]()
+    open var tasks = [String: URLSessionTask]()
     
-    public var session: URLSessionInjectable = {
+    open var session: URLSessionInjectable = {
         let sessionConfig = URLSessionConfiguration.default
         sessionConfig.requestCachePolicy = .reloadIgnoringLocalCacheData
         return URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: OperationQueue.main)
@@ -23,19 +23,19 @@ public class NetworkClient: NSObject, NetworkConnectable {
         self.session = session
     }
     
-    public func get<A>(_ endPoint: GetEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
+    open func get<A>(_ endPoint: GetEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
         execute(endPoint, type: type, completion: completion)
     }
     
-    public func post<A>(_ endPoint: PostEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
+    open func post<A>(_ endPoint: PostEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
         execute(endPoint, type: type, completion: completion)
     }
     
-    public func delete<A>(_ endPoint: DeleteEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
+    open func delete<A>(_ endPoint: DeleteEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
         execute(endPoint, type: type, completion: completion)
     }
     
-    public func put<A>(_ endPoint: PutEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
+    open func put<A>(_ endPoint: PutEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
         execute(endPoint, type: type, completion: completion)
     }
     
