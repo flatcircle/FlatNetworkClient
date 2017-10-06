@@ -18,6 +18,7 @@ public enum HTTPVerb: String {
 public protocol EndpointCreator {
     var URLString: String { get }
     var requestBody: Data? { get }
+    var HTTPMethod: String { get }
     var headerFields: [String: String]? { get }
 }
 
