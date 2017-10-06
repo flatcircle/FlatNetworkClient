@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol PostEndpointCreator: EndpointCreator { }
+public protocol PostEndpointCreator: EndpointCreator { }
 
 extension PostEndpointCreator {
     var HTTPMethod: String {

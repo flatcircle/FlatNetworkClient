@@ -8,14 +8,14 @@
 
 import Foundation
 
-enum HTTPVerb: String {
+public enum HTTPVerb: String {
     case get = "GET"
     case post = "POST"
     case put = "PUT"
     case delete = "DELETE"
 }
 
-protocol EndpointCreator {
+public protocol EndpointCreator {
     var URLString: String { get }
     var requestBody: Data? { get }
     var HTTPMethod: String { get }

@@ -8,9 +8,9 @@
 
 import Foundation
 
-typealias NetworkResult = (Data?, Error?) -> Void
+public typealias NetworkResult = (Data?, Error?) -> Void
 
-protocol NetworkConnectable {
+public protocol NetworkConnectable {
     var tasks: [String: URLSessionTask] { get set }
     var session: URLSessionInjectable { get set }
     
@@ -20,7 +20,7 @@ protocol NetworkConnectable {
     func put<A>(_ endPoint: PutEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable
 }
 
-protocol URLSessionInjectable {
+public protocol URLSessionInjectable {
     func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Swift.Void) -> URLSessionDataTask
 }
 

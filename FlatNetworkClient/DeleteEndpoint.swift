@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DeleteEndpointCreator: EndpointCreator { }
+public protocol DeleteEndpointCreator: EndpointCreator { }
 
 extension DeleteEndpointCreator {
     var HTTPMethod: String {

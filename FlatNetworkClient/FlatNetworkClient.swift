@@ -8,11 +8,11 @@
 
 import Foundation
 
-class NetworkClient: NSObject, NetworkConnectable {
+public class NetworkClient: NSObject, NetworkConnectable {
     
-    var tasks = [String: URLSessionTask]()
+    public var tasks = [String: URLSessionTask]()
     
-    var session: URLSessionInjectable = {
+    public var session: URLSessionInjectable = {
         let sessionConfig = URLSessionConfiguration.default
         sessionConfig.requestCachePolicy = .reloadIgnoringLocalCacheData
         return URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: OperationQueue.main)
@@ -23,19 +23,19 @@ class NetworkClient: NSObject, NetworkConnectable {
         self.session = session
     }
     
-    func get<A>(_ endPoint: GetEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
+    public func get<A>(_ endPoint: GetEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
         execute(endPoint, type: type, completion: completion)
     }
     
-    func post<A>(_ endPoint: PostEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
+    public func post<A>(_ endPoint: PostEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
         execute(endPoint, type: type, completion: completion)
     }
     
-    func delete<A>(_ endPoint: DeleteEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
+    public func delete<A>(_ endPoint: DeleteEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
         execute(endPoint, type: type, completion: completion)
     }
     
-    func put<A>(_ endPoint: PutEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
+    public func put<A>(_ endPoint: PutEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
         execute(endPoint, type: type, completion: completion)
     }
     
