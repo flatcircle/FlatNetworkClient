@@ -11,13 +11,15 @@ import Foundation
 public typealias NetworkResult = (Data?, Error?) -> Void
 
 public protocol NetworkConnectable {
+
     var tasks: [String: URLSessionTask] { get set }
     var session: URLSessionInjectable { get set }
     
-    func get<A>(_ endPoint: GetEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable
-    func post<A>(_ endPoint: PostEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable
-    func delete<A>(_ endPoint: DeleteEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable
-    func put<A>(_ endPoint: PutEndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable
+    func get<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable
+    func post<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable
+    func post(_ endPoint: EndpointCreator, completion: @escaping (Data?, Error?) -> Void)
+    func delete<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable
+    func put<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable
 }
 
 public protocol URLSessionInjectable {

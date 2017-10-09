@@ -16,10 +16,6 @@
 		C08735AF1F8660DF002F9700 /* JSONProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08735AE1F8660DF002F9700 /* JSONProtocols.swift */; };
 		C08735B11F8660F1002F9700 /* NetworkProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08735B01F8660F1002F9700 /* NetworkProtocols.swift */; };
 		C08735B31F866102002F9700 /* EndpointCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08735B21F866102002F9700 /* EndpointCreator.swift */; };
-		C08735B51F86610D002F9700 /* GetEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08735B41F86610D002F9700 /* GetEndpoint.swift */; };
-		C08735B71F866114002F9700 /* PostEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08735B61F866114002F9700 /* PostEndpoint.swift */; };
-		C08735B91F866127002F9700 /* PutEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08735B81F866127002F9700 /* PutEndpoint.swift */; };
-		C08735BB1F86614F002F9700 /* DeleteEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08735BA1F86614F002F9700 /* DeleteEndpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,10 +43,6 @@
 		C08735AE1F8660DF002F9700 /* JSONProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONProtocols.swift; sourceTree = "<group>"; };
 		C08735B01F8660F1002F9700 /* NetworkProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtocols.swift; sourceTree = "<group>"; };
 		C08735B21F866102002F9700 /* EndpointCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointCreator.swift; sourceTree = "<group>"; };
-		C08735B41F86610D002F9700 /* GetEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEndpoint.swift; sourceTree = "<group>"; };
-		C08735B61F866114002F9700 /* PostEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEndpoint.swift; sourceTree = "<group>"; };
-		C08735B81F866127002F9700 /* PutEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutEndpoint.swift; sourceTree = "<group>"; };
-		C08735BA1F86614F002F9700 /* DeleteEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteEndpoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,10 +94,6 @@
 				C08735AE1F8660DF002F9700 /* JSONProtocols.swift */,
 				C08735B01F8660F1002F9700 /* NetworkProtocols.swift */,
 				C08735B21F866102002F9700 /* EndpointCreator.swift */,
-				C08735B41F86610D002F9700 /* GetEndpoint.swift */,
-				C08735B61F866114002F9700 /* PostEndpoint.swift */,
-				C08735B81F866127002F9700 /* PutEndpoint.swift */,
-				C08735BA1F86614F002F9700 /* DeleteEndpoint.swift */,
 				C03683CB1F87728E00993947 /* version.swift-version */,
 			);
 			path = FlatNetworkClient;
@@ -233,12 +221,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C08735B71F866114002F9700 /* PostEndpoint.swift in Sources */,
 				C08735B11F8660F1002F9700 /* NetworkProtocols.swift in Sources */,
-				C08735B91F866127002F9700 /* PutEndpoint.swift in Sources */,
-				C08735BB1F86614F002F9700 /* DeleteEndpoint.swift in Sources */,
 				C08735B31F866102002F9700 /* EndpointCreator.swift in Sources */,
-				C08735B51F86610D002F9700 /* GetEndpoint.swift in Sources */,
 				C08735AD1F866091002F9700 /* FlatNetworkClient.swift in Sources */,
 				C08735AF1F8660DF002F9700 /* JSONProtocols.swift in Sources */,
 			);
