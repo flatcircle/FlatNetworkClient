@@ -55,7 +55,7 @@ struct Person : JsonCreatable {
 ```
 
 ## Step 2
-Create an endpoints enum for one or all of the HTTP Verbs. The enum should implement one of the respective ***EndPointCreator*** protocols for the specific HTTP Verb. 
+Create an endpoints enum for one or all of the HTTP Verbs. The enum should implement the ***EndPointCreator*** protocol
 
 This protocol provides optional properties for:
 
@@ -68,7 +68,7 @@ This protocol provides optional properties for:
 ### GetEndPoint
 
 ```swift
-enum PersonGetEndpoint: GetEndpointCreator {
+enum PersonGetEndpoint: EndpointCreator {
     
     case getName(id: String)
     case getPerson(id: String)
@@ -103,7 +103,7 @@ enum PersonGetEndpoint: GetEndpointCreator {
 ### PostEndPoint
 
 ```swift
-enum PersonPostEndpoint: PostEndpointCreator {
+enum PersonPostEndpoint: EndpointCreator {
     case updateName(id: String, name: String)
     
     var HTTPMethod: String {
@@ -133,7 +133,7 @@ enum PersonPostEndpoint: PostEndpointCreator {
 ### PutEndPoint
 
 ```swift
-enum PersonPutEndpoint: PostEndpointCreator {
+enum PersonPutEndpoint: EndpointCreator {
     case createPerson(id: String, name: String)
     
     var HTTPMethod: String {
@@ -165,7 +165,7 @@ enum PersonPutEndpoint: PostEndpointCreator {
 ### DeleteEndPoint
 
 ```swift
-enum PersonDeleteEndpoint: PostEndpointCreator {
+enum PersonDeleteEndpoint: EndpointCreator {
     case deletePerson(id: String)
     
     var HTTPMethod: String {
