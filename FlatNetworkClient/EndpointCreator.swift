@@ -20,6 +20,7 @@ public protocol EndpointCreator {
     var requestBody: Data? { get }
     var HTTPMethod: String { get }
     var headerFields: [String: String]? { get }
+    var urlRequest: NSMutableURLRequest? { get }
 }
 
 extension EndpointCreator {

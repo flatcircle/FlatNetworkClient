@@ -62,16 +62,21 @@ open class NetworkClient: NSObject, NetworkConnectable {
     }
     
     private func createRequest(_ endpoint: EndpointCreator) -> NSMutableURLRequest? {
+        
+        var request: NSMutableURLRequest? = endpoint.urlRequest
+
         if let url = endpoint.getURL() {
-            let request = NSMutableURLRequest(url: url)
-            request.httpMethod = endpoint.HTTPMethod
-            request.httpBody = endpoint.requestBody
-            if let headerFields = endpoint.headerFields {
-                request.allHTTPHeaderFields = headerFields
-            }
-            return request
+            request = NSMutableURLRequest(url: url)
         }
-        return nil
+        
+        request?.httpMethod = endpoint.HTTPMethod
+        request?.httpBody = endpoint.requestBody
+        
+        if let headerFields = endpoint.headerFields {
+            request?.allHTTPHeaderFields = headerFields
+        }
+        
+        return request
     }
     
     private func startTask(request: URLRequest, completion: @escaping NetworkResult) {
