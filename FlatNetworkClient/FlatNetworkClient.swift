@@ -33,7 +33,7 @@ open class NetworkClient: NSObject, NetworkConnectable {
     
     open func post(_ endPoint: EndpointCreator, completion: @escaping (Data?, Error?) -> Void) {
         if let request = createRequest(endPoint) {
-            startTask(request: request as URLRequest) { data, error in
+            startTask(request: request as URLRequest, httpVerb: endPoint.HTTPMethod) { data, error in
                 completion(data, error)
             }
         }
@@ -49,7 +49,7 @@ open class NetworkClient: NSObject, NetworkConnectable {
     
     private func execute<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
         if let request = createRequest(endPoint) {
-            startTask(request: request as URLRequest) { data, error in
+            startTask(request: request as URLRequest, httpVerb: endPoint.HTTPMethod) { data, error in
                 completion(type?.createFromData(data).flatMap { $0 as? A }, error)
             }
         }
@@ -79,15 +79,15 @@ open class NetworkClient: NSObject, NetworkConnectable {
         return request
     }
     
-    private func startTask(request: URLRequest, completion: @escaping NetworkResult) {
+    private func startTask(request: URLRequest, httpVerb: String, completion: @escaping NetworkResult) {
         getTask(for: request.url!.absoluteString)?.cancel()
         let task = createTask(request as URLRequest, completion: completion)
-        set(task: task, for: request.url!.absoluteString)
+        set(task: task, for: (url: request.url!.absoluteString, verb: httpVerb))
         task.resume()
     }
     
-    private func set(task: URLSessionTask, for key: String) {
-        self.tasks[key] = task
+    private func set(task: URLSessionTask, for key: (url: String, verb: String)) {
+        self.tasks["\(key.url)+\(key.verb)"] = task
     }
     
     private func getTask(for key: String) -> URLSessionTask? {
