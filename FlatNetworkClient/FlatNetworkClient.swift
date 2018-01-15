@@ -80,9 +80,10 @@ open class NetworkClient: NSObject, NetworkConnectable {
     }
     
     private func startTask(request: URLRequest, httpVerb: String, completion: @escaping NetworkResult) {
-        getTask(for: request.url!.absoluteString)?.cancel()
+        let taskKey = (url: request.url!.absoluteString, verb: httpVerb)
+        getTask(for: taskKey)?.cancel()
         let task = createTask(request as URLRequest, completion: completion)
-        set(task: task, for: (url: request.url!.absoluteString, verb: httpVerb))
+        set(task: task, for: taskKey)
         task.resume()
     }
     
@@ -90,13 +91,13 @@ open class NetworkClient: NSObject, NetworkConnectable {
         self.tasks["\(key.url)+\(key.verb)"] = task
     }
     
-    private func getTask(for key: String) -> URLSessionTask? {
-        return self.tasks[key]
+    private func getTask(for key: (url: String, verb: String)) -> URLSessionTask? {
+        return self.tasks["\(key.url)+\(key.verb)"]
     }
     
     open func cancelCurrentTasks() {
-        tasks.forEach { [weak self] key, _ in
-            self?.getTask(for: key)?.cancel()
+        tasks.forEach { (key, urlTask) in
+            urlTask.cancel()
         }
     }
 }
