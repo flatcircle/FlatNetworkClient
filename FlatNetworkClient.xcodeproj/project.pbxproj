@@ -16,6 +16,7 @@
 		C08735AF1F8660DF002F9700 /* JSONProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08735AE1F8660DF002F9700 /* JSONProtocols.swift */; };
 		C08735B11F8660F1002F9700 /* NetworkProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08735B01F8660F1002F9700 /* NetworkProtocols.swift */; };
 		C08735B31F866102002F9700 /* EndpointCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08735B21F866102002F9700 /* EndpointCreator.swift */; };
+		E1B9548D20249BD6009EB955 /* FlatNetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B9548C20249BD6009EB955 /* FlatNetworkError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 		C08735AE1F8660DF002F9700 /* JSONProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONProtocols.swift; sourceTree = "<group>"; };
 		C08735B01F8660F1002F9700 /* NetworkProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtocols.swift; sourceTree = "<group>"; };
 		C08735B21F866102002F9700 /* EndpointCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointCreator.swift; sourceTree = "<group>"; };
+		E1B9548C20249BD6009EB955 /* FlatNetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatNetworkError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 				C08735B01F8660F1002F9700 /* NetworkProtocols.swift */,
 				C08735B21F866102002F9700 /* EndpointCreator.swift */,
 				C03683CB1F87728E00993947 /* version.swift-version */,
+				E1B9548C20249BD6009EB955 /* FlatNetworkError.swift */,
 			);
 			path = FlatNetworkClient;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				C08735B31F866102002F9700 /* EndpointCreator.swift in Sources */,
 				C08735AD1F866091002F9700 /* FlatNetworkClient.swift in Sources */,
 				C08735AF1F8660DF002F9700 /* JSONProtocols.swift in Sources */,
+				E1B9548D20249BD6009EB955 /* FlatNetworkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

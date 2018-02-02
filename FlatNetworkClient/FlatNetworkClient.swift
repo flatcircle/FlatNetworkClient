@@ -57,7 +57,16 @@ open class NetworkClient: NSObject, NetworkConnectable {
     
     private func createTask(_ request: URLRequest, completion: @escaping NetworkResult) -> URLSessionDataTask {
         return session.dataTask(with: request) { data, response, error in
-            completion(data, error)
+            if let response = response as? HTTPURLResponse {
+                switch response.statusCode {
+                case 200...299: completion(data, nil)
+                case 400...499: completion(nil, FlatNetworkError.authenticationError)
+                case 500...599: completion(nil, FlatNetworkError.serverError)
+                default: completion(nil, FlatNetworkError.networkError(error))
+                }
+            } else {
+                completion(data, error)
+            }
         }
     }
     
