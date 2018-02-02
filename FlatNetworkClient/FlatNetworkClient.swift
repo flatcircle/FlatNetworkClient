@@ -64,8 +64,9 @@ open class NetworkClient: NSObject, NetworkConnectable {
                 case 500...599: completion(nil, FlatNetworkError.serverError)
                 default: completion(nil, FlatNetworkError.networkError(error))
                 }
+            } else {
+                completion(data, error)
             }
-            completion(data, error)
         }
     }
     
