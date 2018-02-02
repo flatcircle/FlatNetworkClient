@@ -5,6 +5,10 @@ public enum FlatNetworkError: Error,Equatable {
     case serverError
     case networkError(Error?)
     
+    public var localizedDescription: String {
+        return description
+    }
+    
     public var description: String {
         var message = "Unknown Error"
         switch self {
