@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C03683C91F876FC500993947 /* FlatNetworkClient.podspec in Resources */ = {isa = PBXBuildFile; fileRef = C03683C81F876FC500993947 /* FlatNetworkClient.podspec */; };
-		C03683CC1F87728E00993947 /* version.swift-version in Resources */ = {isa = PBXBuildFile; fileRef = C03683CB1F87728E00993947 /* version.swift-version */; };
 		C087359C1F866052002F9700 /* FlatNetworkClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C08735921F866052002F9700 /* FlatNetworkClient.framework */; };
 		C08735A11F866052002F9700 /* FlatNetworkClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08735A01F866052002F9700 /* FlatNetworkClientTests.swift */; };
 		C08735A31F866052002F9700 /* FlatNetworkClient.h in Headers */ = {isa = PBXBuildFile; fileRef = C08735951F866052002F9700 /* FlatNetworkClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -32,7 +31,6 @@
 /* Begin PBXFileReference section */
 		C03683C81F876FC500993947 /* FlatNetworkClient.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FlatNetworkClient.podspec; sourceTree = SOURCE_ROOT; };
 		C03683CA1F87715600993947 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
-		C03683CB1F87728E00993947 /* version.swift-version */ = {isa = PBXFileReference; lastKnownFileType = text; path = "version.swift-version"; sourceTree = "<group>"; };
 		C03683CD1F87771800993947 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = SOURCE_ROOT; };
 		C08735921F866052002F9700 /* FlatNetworkClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlatNetworkClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C08735951F866052002F9700 /* FlatNetworkClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlatNetworkClient.h; sourceTree = "<group>"; };
@@ -96,7 +94,6 @@
 				C08735AE1F8660DF002F9700 /* JSONProtocols.swift */,
 				C08735B01F8660F1002F9700 /* NetworkProtocols.swift */,
 				C08735B21F866102002F9700 /* EndpointCreator.swift */,
-				C03683CB1F87728E00993947 /* version.swift-version */,
 				E1B9548C20249BD6009EB955 /* FlatNetworkError.swift */,
 			);
 			path = FlatNetworkClient;
@@ -206,7 +203,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C03683C91F876FC500993947 /* FlatNetworkClient.podspec in Resources */,
-				C03683CC1F87728E00993947 /* version.swift-version in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
