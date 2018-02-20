@@ -8,7 +8,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "FlatNetworkClient"
-  s.version      = "0.3.0"
+  s.version      = "0.3.1"
   s.summary      = "Swifty wrapper around URLSession"
 
   s.description  = <<-DESC
