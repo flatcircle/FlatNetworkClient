@@ -90,7 +90,6 @@ open class NetworkClient: NSObject, NetworkConnectable {
     
     private func startTask(request: URLRequest, httpVerb: String, completion: @escaping NetworkResult) {
         let taskKey = (url: request.url!.absoluteString, verb: httpVerb)
-        getTask(for: taskKey)?.cancel()
         let task = createTask(request as URLRequest, completion: completion)
         set(task: task, for: taskKey)
         task.resume()
