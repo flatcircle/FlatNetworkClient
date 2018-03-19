@@ -34,7 +34,6 @@
 		C03683CD1F87771800993947 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = SOURCE_ROOT; };
 		C08735921F866052002F9700 /* FlatNetworkClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlatNetworkClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C08735951F866052002F9700 /* FlatNetworkClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlatNetworkClient.h; sourceTree = "<group>"; };
-		C08735961F866052002F9700 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C087359B1F866052002F9700 /* FlatNetworkClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlatNetworkClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C08735A01F866052002F9700 /* FlatNetworkClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatNetworkClientTests.swift; sourceTree = "<group>"; };
 		C08735A21F866052002F9700 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -89,7 +88,6 @@
 				C03683CA1F87715600993947 /* LICENSE */,
 				C03683C81F876FC500993947 /* FlatNetworkClient.podspec */,
 				C08735951F866052002F9700 /* FlatNetworkClient.h */,
-				C08735961F866052002F9700 /* Info.plist */,
 				C08735AC1F866091002F9700 /* FlatNetworkClient.swift */,
 				C08735AE1F8660DF002F9700 /* JSONProtocols.swift */,
 				C08735B01F8660F1002F9700 /* NetworkProtocols.swift */,
@@ -367,11 +365,10 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 56XX9JASG7;
+				DEVELOPMENT_TEAM = T6SC5Z86A6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FlatNetworkClient/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -391,11 +388,10 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 56XX9JASG7;
+				DEVELOPMENT_TEAM = T6SC5Z86A6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FlatNetworkClient/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
