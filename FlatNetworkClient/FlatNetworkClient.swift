@@ -8,7 +8,29 @@
 
 import Foundation
 
+public typealias InterceptionClosure = (String) -> Bool
+
 open class NetworkClient: NSObject, NetworkConnectable {
+    
+    
+    open var executionInterceptionTask: InterceptionClosure?
+    
+    open func completeTasks(taskKeys: [String]) {
+        //possibly could just resume all of them?
+        for taskKey in taskKeys {
+            tasks[taskKey]?.resume()
+        }
+    }
+    
+    open func setupInterceptionTask() {
+        executionInterceptionTask = nil
+    }
+    
+    public override init() {
+        super.init()
+        setupInterceptionTask()
+    }
+    
     
     open var tasks = [String: URLSessionTask]()
     
@@ -84,7 +106,6 @@ open class NetworkClient: NSObject, NetworkConnectable {
         if let headerFields = endpoint.headerFields {
             request?.allHTTPHeaderFields = headerFields
         }
-        
         return request
     }
     
@@ -92,7 +113,12 @@ open class NetworkClient: NSObject, NetworkConnectable {
         let taskKey = (url: request.url!.absoluteString, verb: httpVerb)
         let task = createTask(request as URLRequest, completion: completion)
         set(task: task, for: taskKey)
-        task.resume()
+        if let interceptionTask = executionInterceptionTask,
+            interceptionTask("\(taskKey.url)+\(taskKey.verb)") {
+            print("FlatNetworkClient intercepeted task: \(taskKey.url)+\(taskKey.verb)")
+        } else {
+            task.resume()
+        }
     }
     
     private func set(task: URLSessionTask, for key: (url: String, verb: String)) {

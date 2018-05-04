@@ -15,6 +15,9 @@ public protocol NetworkConnectable {
     var tasks: [String: URLSessionTask] { get set }
     var session: URLSessionInjectable { get set }
     
+    
+    var executionInterceptionTask: InterceptionClosure? { get set }
+    
     func get<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable
     func post<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable
     func post(_ endPoint: EndpointCreator, completion: @escaping (Data?, Error?) -> Void)
