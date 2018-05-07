@@ -42,7 +42,9 @@ open class NetworkClient: NSObject, NetworkConnectable {
     }
     
     private func execute<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
-        if !endPoint.jwtRequired || isJWTValid() {
+        if !endPoint.jwtRequired {
+            performNetworkCall(endPoint, completion, type)
+        } else if isJWTValid(){
             performNetworkCall(endPoint, completion, type)
         } else {
             refreshJWT? {
@@ -105,14 +107,11 @@ open class NetworkClient: NSObject, NetworkConnectable {
     }
     
     private func  isJWTValid() -> Bool {
-        if let jwt = getJWT?() {
-            if let tokenDate = extractExpiration(jwt) {
-                return tokenDate < Date()
-            } else {
-                return false
-            }
+        if let jwt = getJWT?(),
+            let tokenDate = extractExpiration(jwt) {
+            return tokenDate > Date()
         } else {
-            return true
+            return false
         }
     }
     
