@@ -34,6 +34,7 @@ open class NetworkClient: NSObject, NetworkConnectable {
     }
     
     fileprivate func performNetworkCall<A>(_ endPoint: EndpointCreator, _ completion: @escaping (A?, Error?) -> Void, _ type: A.Type?) where A: JsonCreatable {
+        print("Performing call: \(endPoint.urlRequest?.url?.absoluteString ?? endPoint.URLString)")
         if let request = createRequest(endPoint) {
             startTask(request: request as URLRequest, httpVerb: endPoint.HTTPMethod) { data, error in
                 completion(type?.createFromData(data).flatMap { $0 as? A }, error)
@@ -42,11 +43,15 @@ open class NetworkClient: NSObject, NetworkConnectable {
     }
     
     private func execute<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
+        print("Handling \(endPoint.urlRequest?.url?.absoluteString ?? endPoint.URLString)")
         if !endPoint.jwtRequired {
+            print("JWT not required, proceeding")
             performNetworkCall(endPoint, completion, type)
-        } else if isJWTValid(){
+        } else if isJWTValid() {
+            print("JWT is valid")
             performNetworkCall(endPoint, completion, type)
         } else {
+            print("JWT invalid and required, refreshing")
             refreshJWT? {
                 self.performNetworkCall(endPoint, completion, type)
             }
@@ -109,6 +114,7 @@ open class NetworkClient: NSObject, NetworkConnectable {
     private func  isJWTValid() -> Bool {
         if let jwt = getJWT?(),
             let tokenDate = extractExpiration(jwt) {
+            print("JWT validness: \(tokenDate > Date()), \(tokenDate) - \(Date())")
             return tokenDate > Date()
         } else {
             return false
