@@ -2,9 +2,8 @@ import Foundation
 
 open class NetworkClient: NSObject, NetworkConnectable {
     
-    public var getJWT: (() -> String)?
-    public var refreshJWT: ((() -> Void) -> Void)?
-    
+    open var getJWT: (() -> String?)?
+    open var refreshJWT: ((@escaping () -> Void) -> Void)?
     open var tasks = [String: URLSessionTask]()
     
     open var session: URLSessionInjectable = {
@@ -43,12 +42,11 @@ open class NetworkClient: NSObject, NetworkConnectable {
     }
     
     private func execute<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
-        
         if !endPoint.jwtRequired || isJWTValid() {
             performNetworkCall(endPoint, completion, type)
         } else {
             refreshJWT? {
-                performNetworkCall(endPoint, completion, type)
+                self.performNetworkCall(endPoint, completion, type)
             }
         }
     }
