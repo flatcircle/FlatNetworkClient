@@ -1,36 +1,9 @@
-//
-//  FlatNetworkClient.swift
-//  FlatNetworkClient
-//
-//  Created by Rohan Jansen on 2017/10/05.
-//  Copyright © 2017 io.flatcircle. All rights reserved.
-//
-
 import Foundation
-
-public typealias InterceptionClosure = (String) -> Bool
 
 open class NetworkClient: NSObject, NetworkConnectable {
     
-    
-    open var executionInterceptionTask: InterceptionClosure?
-    
-    open func completeTasks(taskKeys: [String]) {
-        //possibly could just resume all of them?
-        for taskKey in taskKeys {
-            tasks[taskKey]?.resume()
-        }
-    }
-    
-    open func setupInterceptionTask() {
-        executionInterceptionTask = nil
-    }
-    
-    public override init() {
-        super.init()
-        setupInterceptionTask()
-    }
-    
+    public var getJWT: (() -> String)?
+    public var refreshJWT: ((() -> Void) -> Void)?
     
     open var tasks = [String: URLSessionTask]()
     
@@ -53,14 +26,6 @@ open class NetworkClient: NSObject, NetworkConnectable {
         execute(endPoint, type: type, completion: completion)
     }
     
-    open func post(_ endPoint: EndpointCreator, completion: @escaping (Data?, Error?) -> Void) {
-        if let request = createRequest(endPoint) {
-            startTask(request: request as URLRequest, httpVerb: endPoint.HTTPMethod) { data, error in
-                completion(data, error)
-            }
-        }
-    }
-    
     open func delete<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
         execute(endPoint, type: type, completion: completion)
     }
@@ -69,10 +34,21 @@ open class NetworkClient: NSObject, NetworkConnectable {
         execute(endPoint, type: type, completion: completion)
     }
     
-    private func execute<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
+    fileprivate func performNetworkCall<A>(_ endPoint: EndpointCreator, _ completion: @escaping (A?, Error?) -> Void, _ type: A.Type?) where A: JsonCreatable {
         if let request = createRequest(endPoint) {
             startTask(request: request as URLRequest, httpVerb: endPoint.HTTPMethod) { data, error in
                 completion(type?.createFromData(data).flatMap { $0 as? A }, error)
+            }
+        }
+    }
+    
+    private func execute<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
+        
+        if !endPoint.jwtRequired || isJWTValid() {
+            performNetworkCall(endPoint, completion, type)
+        } else {
+            refreshJWT? {
+                performNetworkCall(endPoint, completion, type)
             }
         }
     }
@@ -95,7 +71,7 @@ open class NetworkClient: NSObject, NetworkConnectable {
     private func createRequest(_ endpoint: EndpointCreator) -> NSMutableURLRequest? {
         
         var request: NSMutableURLRequest? = endpoint.urlRequest
-
+        
         if let url = endpoint.getURL() {
             request = NSMutableURLRequest(url: url)
         }
@@ -113,12 +89,7 @@ open class NetworkClient: NSObject, NetworkConnectable {
         let taskKey = (url: request.url!.absoluteString, verb: httpVerb)
         let task = createTask(request as URLRequest, completion: completion)
         set(task: task, for: taskKey)
-        if let interceptionTask = executionInterceptionTask,
-            interceptionTask("\(taskKey.url)+\(taskKey.verb)") {
-            print("FlatNetworkClient intercepeted task: \(taskKey.url)+\(taskKey.verb)")
-        } else {
-            task.resume()
-        }
+        task.resume()
     }
     
     private func set(task: URLSessionTask, for key: (url: String, verb: String)) {
@@ -133,5 +104,43 @@ open class NetworkClient: NSObject, NetworkConnectable {
         tasks.forEach { (key, urlTask) in
             urlTask.cancel()
         }
+    }
+    
+    private func  isJWTValid() -> Bool {
+        if let jwt = getJWT?() {
+            if let tokenDate = extractExpiration(jwt) {
+                return tokenDate < Date()
+            } else {
+                return false
+            }
+        } else {
+            return true
+        }
+    }
+    
+    func extractExpiration(_ token: String?) -> Date? {
+        if let interval = decodeJWT(token, key: "exp") as? TimeInterval {
+            return Date(timeIntervalSince1970: interval)
+        }
+        return nil
+    }
+    
+    func decodeJWT(_ token: String?, key: String) -> Any? {
+        guard let parts = token?.components(separatedBy: "."),
+            parts.count == 3
+            else {
+                return nil
+        }
+        var splitToken = parts[1]
+        if splitToken.count % 4 != 0 {
+            let padlen = 4 - splitToken.count % 4
+            splitToken.append(contentsOf: repeatElement("=", count: padlen))
+        }
+        
+        if let data = Data(base64Encoded: splitToken),
+            let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
+            return json?[key]
+        }
+        return nil
     }
 }
