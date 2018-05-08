@@ -2,7 +2,7 @@ import Foundation
 
 open class NetworkClient: NSObject, NetworkConnectable {
     
-    open var getJWT: (() -> String?)?
+    open var isJWTValid: (() -> Bool)?
     open var refreshJWT: ((@escaping () -> Void) -> Void)?
     open var tasks = [String: URLSessionTask]()
     
@@ -43,17 +43,19 @@ open class NetworkClient: NSObject, NetworkConnectable {
     }
     
     private func execute<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
-        print("Handling \(endPoint.urlRequest?.url?.absoluteString ?? endPoint.URLString)")
-        if !endPoint.jwtRequired {
-            print("JWT not required, proceeding")
-            performNetworkCall(endPoint, completion, type)
-        } else if isJWTValid() {
-            print("JWT is valid")
-            performNetworkCall(endPoint, completion, type)
-        } else {
-            print("JWT invalid and required, refreshing")
-            refreshJWT? {
+        print("\n\nHandling \(endPoint.urlRequest?.url?.absoluteString ?? endPoint.URLString)")
+        DispatchQueue.global(qos: .userInitiated).async {
+            if !endPoint.jwtRequired {
+                print("JWT not required, proceeding")
                 self.performNetworkCall(endPoint, completion, type)
+            } else if self.isJWTValid?() ?? false {
+                print("JWT is valid")
+                self.performNetworkCall(endPoint, completion, type)
+            } else {
+                print("JWT invalid and required, refreshing!!!111")
+                self.refreshJWT? {
+                    self.execute(endPoint, type: type, completion: completion)
+                }
             }
         }
     }
@@ -109,41 +111,5 @@ open class NetworkClient: NSObject, NetworkConnectable {
         tasks.forEach { (key, urlTask) in
             urlTask.cancel()
         }
-    }
-    
-    private func  isJWTValid() -> Bool {
-        if let jwt = getJWT?(),
-            let tokenDate = extractExpiration(jwt) {
-            print("JWT validness: \(tokenDate > Date()), \(tokenDate) - \(Date())")
-            return tokenDate > Date()
-        } else {
-            return false
-        }
-    }
-    
-    func extractExpiration(_ token: String?) -> Date? {
-        if let interval = decodeJWT(token, key: "exp") as? TimeInterval {
-            return Date(timeIntervalSince1970: interval)
-        }
-        return nil
-    }
-    
-    func decodeJWT(_ token: String?, key: String) -> Any? {
-        guard let parts = token?.components(separatedBy: "."),
-            parts.count == 3
-            else {
-                return nil
-        }
-        var splitToken = parts[1]
-        if splitToken.count % 4 != 0 {
-            let padlen = 4 - splitToken.count % 4
-            splitToken.append(contentsOf: repeatElement("=", count: padlen))
-        }
-        
-        if let data = Data(base64Encoded: splitToken),
-            let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
-            return json?[key]
-        }
-        return nil
     }
 }
