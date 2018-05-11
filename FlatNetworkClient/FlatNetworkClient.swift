@@ -34,7 +34,6 @@ open class NetworkClient: NSObject, NetworkConnectable {
     }
     
     fileprivate func performNetworkCall<A>(_ endPoint: EndpointCreator, _ completion: @escaping (A?, Error?) -> Void, _ type: A.Type?) where A: JsonCreatable {
-        print("Performing call: \(endPoint.urlRequest?.url?.absoluteString ?? endPoint.URLString)")
         if let request = createRequest(endPoint) {
             startTask(request: request as URLRequest, httpVerb: endPoint.HTTPMethod) { data, error in
                 completion(type?.createFromData(data).flatMap { $0 as? A }, error)
@@ -43,16 +42,12 @@ open class NetworkClient: NSObject, NetworkConnectable {
     }
     
     private func execute<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
-        print("\n\nHandling \(endPoint.urlRequest?.url?.absoluteString ?? endPoint.URLString)")
         DispatchQueue.global(qos: .userInitiated).async {
             if !endPoint.jwtRequired {
-                print("JWT not required, proceeding")
                 self.performNetworkCall(endPoint, completion, type)
             } else if self.isJWTValid?() ?? false {
-                print("JWT is valid")
                 self.performNetworkCall(endPoint, completion, type)
             } else {
-                print("JWT invalid and required, refreshing!!!111")
                 self.refreshJWT? {
                     self.execute(endPoint, type: type, completion: completion)
                 }
