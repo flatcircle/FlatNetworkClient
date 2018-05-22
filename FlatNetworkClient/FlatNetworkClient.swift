@@ -3,7 +3,6 @@ import Foundation
 open class NetworkClient: NSObject, NetworkConnectable {
     
     open var isJWTValid: (() -> Bool)?
-    open var refreshJWT: ((@escaping () -> Void) -> Void)?
     open var tasks = [String: URLSessionTask]()
     
     open var session: URLSessionInjectable = {
@@ -48,9 +47,7 @@ open class NetworkClient: NSObject, NetworkConnectable {
             } else if self.isJWTValid?() ?? false {
                 self.performNetworkCall(endPoint, completion, type)
             } else {
-                self.refreshJWT? {
-                    self.execute(endPoint, type: type, completion: completion)
-                }
+                self.execute(endPoint, type: type, completion: completion)
             }
         }
     }
