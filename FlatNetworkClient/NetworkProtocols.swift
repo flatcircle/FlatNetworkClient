@@ -3,7 +3,6 @@ import Foundation
 public typealias NetworkResult = (Data?, Error?) -> Void
 
 public protocol NetworkConnectable {
-    var tasks: [String: URLSessionTask] { get set }
     var session: URLSessionInjectable { get set }
     var isJWTValid: (() -> Bool)? { get set }
     

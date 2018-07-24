@@ -3,7 +3,6 @@ import Foundation
 open class NetworkClient: NSObject, NetworkConnectable {
     
     open var isJWTValid: (() -> Bool)?
-    open var tasks = [String: URLSessionTask]()
     
     open var session: URLSessionInjectable = {
         let sessionConfig = URLSessionConfiguration.default
@@ -85,23 +84,7 @@ open class NetworkClient: NSObject, NetworkConnectable {
     }
     
     private func startTask(request: URLRequest, httpVerb: String, completion: @escaping NetworkResult) {
-        let taskKey = (url: request.url!.absoluteString, verb: httpVerb)
         let task = createTask(request as URLRequest, completion: completion)
-        set(task: task, for: taskKey)
         task.resume()
-    }
-    
-    private func set(task: URLSessionTask, for key: (url: String, verb: String)) {
-        self.tasks["\(key.url)+\(key.verb)"] = task
-    }
-    
-    private func getTask(for key: (url: String, verb: String)) -> URLSessionTask? {
-        return self.tasks["\(key.url)+\(key.verb)"]
-    }
-    
-    open func cancelCurrentTasks() {
-        tasks.forEach { (key, urlTask) in
-            urlTask.cancel()
-        }
     }
 }
