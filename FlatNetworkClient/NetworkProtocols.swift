@@ -4,7 +4,8 @@ public typealias NetworkResult = (Data?, Error?) -> Void
 
 public protocol NetworkConnectable {
     var session: URLSessionInjectable { get set }
-    var isJWTValid: (() -> Bool)? { get set }
+    
+    func isJWTValid(completion: @escaping (Bool) -> Void)
     
     func get<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable
     func post<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable

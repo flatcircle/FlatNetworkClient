@@ -2,8 +2,6 @@ import Foundation
 
 open class NetworkClient: NSObject, NetworkConnectable {
     
-    open var isJWTValid: (() -> Bool)?
-    
     open var session: URLSessionInjectable = {
         let sessionConfig = URLSessionConfiguration.default
         sessionConfig.requestCachePolicy = .reloadIgnoringLocalCacheData
@@ -39,15 +37,24 @@ open class NetworkClient: NSObject, NetworkConnectable {
         }
     }
     
+    open func isJWTValid(completion: @escaping (Bool) -> Void) {
+        completion(true)
+    }
+    
     private func execute<A>(_ endPoint: EndpointCreator, type: A.Type?, completion: @escaping (A?, Error?) -> Void) where A: JsonCreatable {
         DispatchQueue.global(qos: .userInitiated).async {
             if !endPoint.jwtRequired {
                 self.performNetworkCall(endPoint, completion, type)
-            } else if self.isJWTValid?() ?? false {
-                self.performNetworkCall(endPoint, completion, type)
-            } else {
-                self.execute(endPoint, type: type, completion: completion)
+                return
             }
+            
+            self.isJWTValid(completion: { valid in
+                if valid {
+                    self.performNetworkCall(endPoint, completion, type)
+                } else {
+                    completion(nil, JWTError())
+                }
+            })
         }
     }
     
@@ -87,4 +94,8 @@ open class NetworkClient: NSObject, NetworkConnectable {
         let task = createTask(request as URLRequest, completion: completion)
         task.resume()
     }
+}
+
+class JWTError: Error {
+    var localizedDescription: String = "JWT failed to refresh. Letting calls through."
 }
