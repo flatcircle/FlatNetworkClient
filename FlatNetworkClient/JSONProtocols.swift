@@ -12,12 +12,11 @@ public protocol JsonCreatable {
     associatedtype T
     associatedtype A
     static func createFromJSON(_ json: A?) -> T?
-    static func decrypt(_ data: Data?) -> Data?
 }
 
 extension JsonCreatable {
     public static func createFromData(_ data: Data?) -> T? {
-        if let data = self.decrypt(data),
+        if let data = data,
             let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? A {
             return self.createFromJSON(json)
         } else {
