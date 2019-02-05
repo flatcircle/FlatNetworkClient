@@ -64,7 +64,17 @@ open class NetworkClient: NSObject, NetworkConnectable {
                 switch response.statusCode {
                 case 200...299: completion(data, nil)
                 case 400...499: completion(nil, FlatNetworkError.authenticationError)
-                case 500...599: completion(nil, FlatNetworkError.serverError)
+                case 500...599:
+                    
+                    if response.statusCode == 500,
+                        let data = data,
+                        let responseString = String(data: data, encoding: .utf8),
+                        let requestString = request.url?.absoluteString {
+                        NotificationCenter.default.post(name:Notification.Name(rawValue:"API500Error"),
+                                                        object: nil,
+                                                        userInfo: ["response":responseString, "url": requestString])
+                    }
+                    completion(nil, FlatNetworkError.serverError)
                 default: completion(nil, FlatNetworkError.networkError(error))
                 }
             } else {
